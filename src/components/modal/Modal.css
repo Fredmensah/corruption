@@ -1,0 +1,35 @@
+.MuiDialogContent-root {
+   padding: 15px !important;
+}
+.MuiDialogTitle-root {
+  background-color: #FEF7EE !important;
+}
+
+.alertHeader {
+  font-size: 20px !important; 
+  padding: 30px 20px 10px 20px !important;
+}
+
+.alertContent {
+  padding: 20px !important;
+}
+
+
+.alertCancelButton {
+  background-color: #FFFFFF; 
+  border: 1px solid #DAAB59 !important; 
+  color: #DAAB59 !important; 
+  padding: 5px 40px !important; 
+  margin-right: 10px !important;
+  float: left !important;
+  text-transform: none !important;
+}
+
+.alertSaveButton {
+  background-color: #DAAB59 !important; 
+  color: #ffffff !important; 
+  padding: 5px 40px !important;
+  float: right !important;
+  margin-left: 10px !important;
+  text-transform: none !important;
+}

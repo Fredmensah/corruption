@@ -1,24 +1,61 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from "react";
+import { DAppProvider } from "@usedapp/core";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 import './App.css';
+import AppLayout from "./components/layout/Layout";
+import LoginView from "./views/login/LoginView";
+import ProtectedRoute from "./navigation/ProtectedRoute";
+import HomeView from "./views/home/HomeView";
+import PublicRoute from "./navigation/PublicRoute";
+import OwnerHomeView from "./views/owner/OwnerHomeView";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const checkUserToken = () => {
+        const userToken = localStorage.getItem('user-token');
+        if (!userToken || userToken === 'undefined') {
+            setIsLoggedIn(false);
+        }
+        setIsLoggedIn(true);
+    }
+
+    useEffect(() => {
+        checkUserToken();
+    }, [isLoggedIn]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <DAppProvider config={{}}>
+      <BrowserRouter basename={'/'}>
+				<Routes>
+          <Route path='/' element={<AppLayout />}>
+						<Route path='/' element={
+                <PublicRoute>
+                  <LoginView />
+                </PublicRoute>
+              } 
+            />
+					</Route>
+          <Route path='/' element={<AppLayout />}>
+						<Route path='/home' element={
+                <ProtectedRoute>
+                  <HomeView/>
+                </ProtectedRoute>
+              }
+            />
+					</Route>
+          <Route path='' element={<AppLayout />}>
+						<Route path='/home/owner' element={
+                <ProtectedRoute>
+                  <OwnerHomeView/>
+                </ProtectedRoute>
+              }
+            />
+					</Route>
+        </Routes>
+      </BrowserRouter>
+    </DAppProvider>
   );
 }
 
